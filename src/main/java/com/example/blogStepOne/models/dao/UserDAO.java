@@ -28,20 +28,21 @@ public class UserDAO implements IUserDAO{
             entityManager.persist(user);
         }
     }
+
     @Override
-    public User findOne(User user){
-        if (user.getId() == null && user.getId() > 0){
-            entityManager.persist(user);
+    public User findOne(Long id) {
+        if(!id.equals(null)){
+            return (User) entityManager.createQuery("from User where id = :id").setParameter("id", id).getSingleResult();
         }else {
-            return null;
+            return (User) entityManager.createQuery("from User where id = :id").setParameter("id", id).getSingleResult();
         }
-        return user;
     }
 
     @Override
-    public void delete(User user) {
-        if (user.getId() != null && user.getId() > 0){
-            delete(user);
+    @Transactional
+    public void delete(Long id) {
+        if(!id.equals(null)){
+            entityManager.createQuery("delete from User where id = :id").setParameter("id", id).executeUpdate();
         }
     }
 

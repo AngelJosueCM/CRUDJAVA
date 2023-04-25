@@ -10,7 +10,8 @@ public interface IUserDAO {
 
     void save(User user);
 
-    User findOne(User user);
+    User findOne(Long id);
 
-    void delete(User user);
+    void delete(Long id);
+
 }

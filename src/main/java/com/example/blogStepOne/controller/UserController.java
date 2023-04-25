@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import jakarta.validation.Valid;
@@ -50,4 +48,18 @@ public class UserController {
         status.setComplete();
         return "redirect:list";
     }
+    @GetMapping ("/delete/{id}")
+    public String delete(@PathVariable long id){
+        userDAO.delete(id);
+        return "redirect:/list";
+    }
+
+    @GetMapping ("/form/{id}")
+    public String updateuser(@PathVariable long id, Model model){
+        model.addAttribute("buttonTitle", "Update User");
+        model.addAttribute("user", userDAO.findOne(id));
+        return "form";
+    }
 }
+
+
